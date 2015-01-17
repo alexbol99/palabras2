@@ -14,46 +14,5 @@ require(['models/appstage','models/palabra',
         var quiz = new Quiz();
         quiz.start();
 
-        // var sel = new SelectCategory();
-
-        var a = false;
-        var b = false;
-        if (a) {
-
-            var PalabraParseObject = Parse.Object.extend("Palabra");
-            palabras.forEach(function(p) {
-                var palabraObject = new PalabraParseObject();
-                palabraObject.set("category", p.get("category"));
-                palabraObject.set("spanish", p.get("spanish"));
-                palabraObject.set("russian", p.get("russian"));
-                palabraObject.save( null, {
-                    success: function(object) {
-                        console.log('New object created with objectId: ' + object.id);
-                    },
-                    error: function(object, error) {
-                        console.log('Failed to create new object, with error code: ' + error.message);
-                    }
-                });
-            });
-        }
-        if (b) {
-            var PalabraParseObject = Parse.Object.extend("Palabra");
-            var PalabrasCollection = Parse.Collection.extend({
-                model: PalabraParseObject,
-                query: (new Parse.Query(PalabraParseObject)).equalTo("category", "Interrogativos")
-            });
-            var collection = new PalabrasCollection();
-            collection.fetch({
-                success: function(collection) {
-                    collection.each(function(object) {
-                        console.warn(object);
-                    });
-                },
-                error: function(collection, error) {
-                    // The collection could not be retrieved.
-                    console.warn(error.message);
-                }
-            });
-        }
     });
 

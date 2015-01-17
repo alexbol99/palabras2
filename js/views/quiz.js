@@ -4,13 +4,11 @@
 define(['models/appstage', 'models/palabra', 'views/textbox'],
     function (appStage, Palabra, Textbox) {
         var self;
-        var stage;
 
         return Backbone.View.extend({
 
             initialize: function () {
                 self = this;
-                stage = appStage.get("stage");
                 this.maxNum = (window.orientation == undefined || window.orientation == 0) ? 8 : 4;
                 $("#selectCategory").on("change", this.categoryChanged);
                 $("#language").on("change", this.refresh_cb);
@@ -41,16 +39,12 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
 
             categoryChanged: function(event) {
                 var category = $("#selectCategory").val();
-                // self.palabrasCategory = palabrasCollection.where({category : category});
                 self.retrieveFromParse(category);
-                // self.refresh();
             },
 
             start: function() {
                 var category = $("#selectCategory").val();
-                // this.palabrasCategory = palabrasCollection.where({category : category});
                 this.retrieveFromParse(category);
-                // this.refresh();
             },
 
             refresh_cb: function() {
@@ -108,8 +102,6 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
                         y_position += 50;
                     }
                 });
-
-                stage.update();
             },
 
             match: function() {
@@ -140,7 +132,6 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
                 }
 
                 inds.forEach(function(i) {
-                    // palabras.push(this.palabrasCategory[i]);
                     palabras.push(this.palabrasCategory.at(i));
                 }, this);
                 return palabras;
@@ -168,13 +159,7 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
             },
 
             clearAll: function() {
-                stage.children.forEach(function(child) {
-                    if (child.htmlElement) {
-                        $(child.htmlElement).remove();
-                    }
-                });
-                stage.removeAllChildren ();
-                stage.clear();
+                $("#palabras-container").empty();
             }
         });
     });
