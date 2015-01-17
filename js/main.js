@@ -12,6 +12,7 @@ require(['models/appstage','models/palabra',
 
         // alert ("we are here");
         var quiz = new Quiz();
+        quiz.updateCounters();
         quiz.start();
 
     });
