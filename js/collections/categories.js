@@ -3,8 +3,18 @@
  */
 define([],
     function () {
-        return new Backbone.Collection({
+        var self;
+
+        //var PalabraParseObject = Parse.Object.extend({
+        //    className: "Palabra"
+        //});
+
+        var Categories = Backbone.Collection.extend({
+            // model: PalabraParseObject,
+
             initialize: function() {
+                Parse.initialize("nNSG5uA8wGI1tWe4kaPqX3pFFplhc0nV5UlyDj8H", "IDxfUbmW9AIn7iej2PAC7FtDAO1KvSdPuqP18iyu");
+                self = this;
                 this.sync();
             },
 
@@ -14,19 +24,30 @@ define([],
                 var query = new Parse.Query(PalabraParseObject);
                 query.select("category");
                 query.limit(1000);
+
                 query.find().then(function(results) {
                     results.forEach( function(result) {
-                        // console.log(result.get("category"));
-                        // self.categories.push(result.get("category"));
                         var category = result.get("category");
-                        if (categories[category] == undefined) {
-                            categories[category].count = 0;
+                        var model = self.findWhere({"category": category});
+                        if (model == undefined) {
+                            model = self.add({
+                                "category" : category,
+                                "count" : 0
+                            });
                         }
-                        categories[category].count++;
+                        model.set("count", model.get("count")+1);
                     });
-                    self.categories = _.unique(self.categories);
                     self.trigger("ready");
                 });
+            },
+
+            defineQuery: function() {
+                var query = new Parse.Query(PalabraParseObject);
+                query.select("category");
+                query.limit(1000);
+                this.query = query;
             }
         });
+
+        return new Categories();
     });

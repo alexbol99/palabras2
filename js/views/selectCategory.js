@@ -1,14 +1,14 @@
 /**
  * Created by Owner on 1/15/15.
  */
-define(['models/appstage'],
-    function (appStage) {
+define(['collections/categories', 'views/quiz'],
+    function (categories, quiz) {
         var self;
-        return Backbone.View.extend({
+        var SelectCategoryView = Backbone.View.extend({
 
             el: "select#selectCategory",
 
-            template: _.template('<option value=<%= value %> ><%= text %></option>'),
+            template: _.template('<option value="<%= category %>" >"<%= text %>"</option>'),
 
             events: {
                 "change": "categoryChanged"
@@ -16,36 +16,25 @@ define(['models/appstage'],
 
             initialize: function () {
                 self = this;
-                this.categories = [];
-                this.retrieveFromParse();
-                this.on("ready", this.render, this);
-            },
-
-            retrieveFromParse: function() {
-                var categories;
-                var PalabraParseObject = Parse.Object.extend("Palabra");
-                var query = new Parse.Query(PalabraParseObject);
-                query.select("category");
-                query.limit(1000);
-                query.find().then(function(results) {
-                    results.forEach( function(result) {
-                        // console.log(result.get("category"));
-                        self.categories.push(result.get("category"));
-                    });
-                    self.categories = _.unique(self.categories);
-                    self.trigger("ready");
-                });
+                this.categories = categories;
+                this.categories.on("ready", this.render, this);
             },
 
             render: function () {
-                this.categories.forEach( function(category) {
-                    $(self.el).append(self.template( {value: category, text: category} ))
+                this.categories.each( function(category) {
+                    $(self.el).append(self.template( {category: category.get("category"),
+                        text: category.get("category") + ' (' + category.get("count") + ')'} ));
                 });
+                $(this.el).selectmenu('refresh');
+                this.categoryChanged();
             },
 
             categoryChanged: function() {
-                console.log("category changed");
+                // console.log("category changed to " + $(this.el).val());
+                quiz.start( $(this.el).val() );
             }
 
         });
+
+        return new SelectCategoryView();
     });

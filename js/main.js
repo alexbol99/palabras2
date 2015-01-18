@@ -4,16 +4,11 @@
 require.config({
     urlArgs: "bust=" + (new Date()).getTime()
 });
-require(['models/appstage','models/palabra',
-        'views/textbox','views/quiz'],
-    function (appStage, Palabra, Textbox, Quiz) {
+require(['models/appstage','models/palabra','collections/categories',
+        'views/textbox','views/quiz','views/selectCategory'],
+    function (appStage, Palabra, categories, Textbox, Quiz) {
 
         Parse.initialize("nNSG5uA8wGI1tWe4kaPqX3pFFplhc0nV5UlyDj8H", "IDxfUbmW9AIn7iej2PAC7FtDAO1KvSdPuqP18iyu");
-
-        // alert ("we are here");
-        var quiz = new Quiz();
-        quiz.updateCounters();
-        quiz.start();
 
     });
 

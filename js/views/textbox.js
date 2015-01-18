@@ -15,7 +15,7 @@ define(['models/appstage'],
                         drop: function( event, ui ) {
                             var other = ui.draggable[0]
                             if (this.id == other.id) {
-                                $(this).html(this.innerText + " - " + other.innerText);
+                                $(this).html($(this).text() + " - " + $(other).text());
                                 $(this).fadeOut(1500);
                                 $(other).remove();
                                 appStage.triggerMatch();
@@ -28,7 +28,8 @@ define(['models/appstage'],
                 $(this.el).html(this.model.get("text"));
                 this.el.id = this.model.get("id");    // augment element with id for matching
 
-                $("#palabras-container").append(this.el);
+                $(this.el).hide().appendTo("#palabras-container").fadeIn(1500);
+                // $("#palabras-container").append(this.el);
 
                 var left = this.model.get("leftside") ? 0 : $(this.el).parent().width()/2;
                 var top = this.model.get("y");

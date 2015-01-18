@@ -5,35 +5,15 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
     function (appStage, Palabra, Textbox) {
         var self;
 
-        return Backbone.View.extend({
+        var Quiz = Backbone.View.extend({
 
             initialize: function () {
                 self = this;
                 this.maxNum = (window.orientation == undefined || window.orientation == 0) ? 8 : 4;
 
-                $("#selectCategory").on("change", this.categoryChanged);
                 $("#language").on("change", this.refresh_cb);
                 $("#refresh-button").on("click", this.refresh_cb);
                 appStage.on("match", this.match, this);
-            },
-
-            updateCounters: function() {
-                $("#selectCategory option").each(function()
-                {
-                    var option = this;
-                    var category = $(this).val();
-                    var PalabraParseObject = Parse.Object.extend("Palabra");
-                    var query = new Parse.Query(PalabraParseObject);
-                    query.equalTo("category", category);
-                    query.limit(1000);
-
-                    query.count().then(function(count) {
-                        $(option).html(category + " (" + count + ")" );
-                        $('#selectCategory').selectmenu('refresh');
-                    });
-
-                    // add $(this).val() to your list
-                });
             },
 
             retrieveFromParse: function(category) {
@@ -57,13 +37,7 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
                 return collection;
             },
 
-            categoryChanged: function(event) {
-                var category = $("#selectCategory").val();
-                self.retrieveFromParse(category);
-            },
-
-            start: function() {
-                var category = $("#selectCategory").val();
+            start: function( category ) {
                 this.retrieveFromParse(category);
             },
 
@@ -182,5 +156,7 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
                 $("#palabras-container").empty();
             }
         });
+
+        return new Quiz();
     });
 
