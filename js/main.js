@@ -6,7 +6,9 @@ require.config({
 });
 require(['models/app','models/palabra','collections/categories',
         'views/textbox','views/quiz','views/selectCategory'],
-    function (appStage, Palabra, categories, Textbox, Quiz) {
+    function (/*appStage, Palabra, categories, Textbox, Quiz*/) {
+        // $("#popupPalabrasLink").trigger("click");
+        $( "#popupPalabras" ).popup( "open" );
 
         Parse.initialize("nNSG5uA8wGI1tWe4kaPqX3pFFplhc0nV5UlyDj8H", "IDxfUbmW9AIn7iej2PAC7FtDAO1KvSdPuqP18iyu");
 

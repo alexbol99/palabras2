@@ -31,6 +31,7 @@ define(['collections/categories', 'views/quiz'],
 
             categoryChanged: function() {
                 // console.log("category changed to " + $(this.el).val());
+                $( "#popupPalabras" ).popup( "close" );
                 quiz.start( $(this.el).val() );
             }
 
