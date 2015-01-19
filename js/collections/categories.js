@@ -1,27 +1,20 @@
 /**
  * Created by Owner on 1/17/15.
  */
-define([],
-    function () {
+define(['models/app','models/palabra'],
+    function (app, palabra) {
         var self;
 
-        //var PalabraParseObject = Parse.Object.extend({
-        //    className: "Palabra"
-        //});
-
         var Categories = Backbone.Collection.extend({
-            // model: PalabraParseObject,
 
             initialize: function() {
-                Parse.initialize("nNSG5uA8wGI1tWe4kaPqX3pFFplhc0nV5UlyDj8H", "IDxfUbmW9AIn7iej2PAC7FtDAO1KvSdPuqP18iyu");
                 self = this;
                 this.sync();
             },
 
             sync: function() {
                 var categories;
-                var PalabraParseObject = Parse.Object.extend("Palabra");
-                var query = new Parse.Query(PalabraParseObject);
+                var query = new Parse.Query(palabra);
                 query.select("category");
                 query.limit(1000);
 
@@ -39,14 +32,8 @@ define([],
                     });
                     self.trigger("ready");
                 });
-            },
-
-            defineQuery: function() {
-                var query = new Parse.Query(PalabraParseObject);
-                query.select("category");
-                query.limit(1000);
-                this.query = query;
             }
+
         });
 
         return new Categories();

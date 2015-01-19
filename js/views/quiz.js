@@ -1,8 +1,8 @@
 /**
  * Created by alexbol on 1/8/2015.
  */
-define(['models/appstage', 'models/palabra', 'views/textbox'],
-    function (appStage, Palabra, Textbox) {
+define(['models/app', 'models/palabra', 'views/textbox'],
+    function (app, PalabraParseObject, Textbox) {
         var self;
 
         var Quiz = Backbone.View.extend({
@@ -13,11 +13,11 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
 
                 $("#language").on("change", this.refresh_cb);
                 $("#refresh-button").on("click", this.refresh_cb);
-                appStage.on("match", this.match, this);
+                app.on("match", this.match, this);
             },
 
             retrieveFromParse: function(category) {
-                var PalabraParseObject = Parse.Object.extend("Palabra");
+                // var PalabraParseObject = Parse.Object.extend("Palabra");
                 var PalabrasParseCollection = Parse.Collection.extend({
                     model: PalabraParseObject,
                     query: (new Parse.Query(PalabraParseObject)).equalTo("category", category)
@@ -45,6 +45,13 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
                 self.refresh();
             },
 
+            match: function() {
+                this.curNum--;
+                if (this.curNum == 0) {
+                    this.refresh();
+                }
+            },
+
             refresh: function () {
                 this.clearAll();
 
@@ -56,17 +63,14 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
 
                 this.palabras.forEach(function(palabra) {
                     if (palabra) {
-                        var model = new Palabra(
-                            {
+                        var spanish = new Textbox({
+                            model: {
                                 id: palabra.cid,
                                 leftside: true,
                                 text: palabra.get("spanish"),
                                 y: y_position
-                            });
-
-                        model.on("match", this.match, this);
-
-                        var spanish = new Textbox({ model: model });
+                            }
+                        });
 
                         y_position += 50;
                     }
@@ -80,29 +84,19 @@ define(['models/appstage', 'models/palabra', 'views/textbox'],
                 var y_position = 0;
                 this.palabras.forEach(function(palabra) {
                     if (palabra) {
-                        var model = new Palabra(
-                            {
+                        var other = new Textbox({
+                            model: {
                                 id: palabra.cid,
                                 leftside: false,
-                                text: palabra.get(otherLanguage),   /* get("russian"),*/
+                                text: palabra.get(otherLanguage),
                                 y: y_position,
                                 hebrew: hebrew
-                            });
-
-                        model.on("match", this.match, this);
-
-                        var other = new Textbox({ model: model } );
+                            }
+                        });
 
                         y_position += 50;
                     }
                 });
-            },
-
-            match: function() {
-                this.curNum--;
-                if (this.curNum == 0) {
-                    this.refresh();
-                }
             },
 
             getRandom: function() {

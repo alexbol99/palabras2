@@ -4,7 +4,7 @@
 require.config({
     urlArgs: "bust=" + (new Date()).getTime()
 });
-require(['models/appstage','models/palabra','collections/categories',
+require(['models/app','models/palabra','collections/categories',
         'views/textbox','views/quiz','views/selectCategory'],
     function (appStage, Palabra, categories, Textbox, Quiz) {
 
