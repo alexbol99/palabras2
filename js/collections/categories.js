@@ -32,6 +32,13 @@ define(['models/app','models/palabra'],
                     });
                     self.trigger("ready");
                 });
+            },
+
+            increaseCounter: function(category) {
+                var model = this.findWhere({"category": category});
+                if (model != undefined) {
+                    model.set("count", model.get("count")+1);
+                }
             }
 
         });

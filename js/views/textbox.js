@@ -22,6 +22,14 @@ define(['models/app'],
                             }
                         }
                     });
+                $(this.el).on( "taphold", function(event) {
+                    var position = $(this).position();
+                    if ( Math.abs(position.top - this.origTop) <= 10 &&
+                        Math.abs(position.left - this.origLeft) <= 10) {
+                        alert("long tap event");
+                    }
+                });
+
             },
 
             render: function () {
@@ -36,6 +44,10 @@ define(['models/app'],
 
                 $(this.el).parent().css({position: 'relative'});
                 $(this.el).css({top: top, left: left, position:'absolute'});
+
+                var position = $(this.el).position();
+                this.el.origTop = position.top;
+                this.el.origLeft = position.left;
             }
 
         });

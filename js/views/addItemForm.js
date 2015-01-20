@@ -16,6 +16,7 @@ define(['collections/categories','models/palabra'],
 
             initialize: function () {
                 self = this;
+                this.category = "";
                 $("#add-item-button").on("click", this.openForm);
             },
 
@@ -27,30 +28,31 @@ define(['collections/categories','models/palabra'],
                         text: category.get("category")} ));
                 });
                 $("form#addItemForm select").selectmenu('refresh');
+                this.category = $("#select-category-input-field").val();
+            },
+
+            resetForm: function() {
+                $(self.el)[0].reset();
+                $("#select-category-input-field").val(self.category);
+                categories.increaseCounter(self.category);
             },
 
             formSubmitted: function() {
-                var category = $("#select-category-input-field").val();
+                this.category = $("#select-category-input-field").val();
                 var spanish = $("#spanish-input-field").val();
                 var russian = $("#russian-input-field").val();
                 var hebrew = $("#hebrew-input-field").val();
 
                 var palabra = new Palabra();
-                palabra.set("category", category);
+                palabra.set("category", this.category);
                 palabra.set("spanish", spanish);
                 palabra.set("russian", russian);
                 palabra.set("hebrew", hebrew);
 
-                palabra.save( null, {
-                        success: function (palabra) {
-                            alert('New object created with objectId:' + palabra.id);
-                            $(self.el)[0].reset();
-                        },
-                        error: function (gameScore, error) {
-                            alert('Failed to create new object, with error code: ' + error.message);
-                        }
-                    }
-                );
+                palabra.on("added", this.resetForm);
+
+                palabra.addToParse();       // save to cloud and trigger event "added" on success
+
                 return false;
             }
         });

@@ -18,6 +18,7 @@ define(['collections/categories', 'views/quiz'],
                 self = this;
                 this.categories = categories;
                 this.categories.on("ready", this.render, this);
+                this.categories.on("change:count", this.increaseCounter, this);
             },
 
             render: function () {
@@ -30,9 +31,14 @@ define(['collections/categories', 'views/quiz'],
             },
 
             categoryChanged: function() {
-                // console.log("category changed to " + $(this.el).val());
-                // $( "#popupPalabras" ).popup( "close" );
                 quiz.start( $(this.el).val() );
+            },
+
+            increaseCounter: function(model) {
+                var category = model.get("category");
+                var count = model.get("count");
+                $('select#selectCategory option[value="' + category + '"]').html(category + ' (' + count + ')');
+                $(this.el).selectmenu('refresh');
             }
 
         });
