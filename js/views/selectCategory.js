@@ -8,7 +8,7 @@ define(['collections/categories', 'views/quiz'],
 
             el: "select#selectCategory",
 
-            template: _.template('<option value="<%= category %>" >"<%= text %>"</option>'),
+            template: _.template('<option value="<%= category %>" ><%= text %></option>'),
 
             events: {
                 "change": "categoryChanged"

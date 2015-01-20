@@ -8,12 +8,25 @@ define(['collections/categories','models/palabra'],
 
             el: "form#addItemForm",
 
+            optionTemplate: _.template('<option value="<%= category %>" ><%= text %></option>'),
+
             events: {
                 "submit": "formSubmitted"
             },
 
             initialize: function () {
                 self = this;
+                $("#add-item-button").on("click", this.openForm);
+            },
+
+            openForm: function() {
+                // Fill-in select options
+                $("form#addItemForm select").empty();
+                categories.each( function(category) {
+                    $("form#addItemForm select").append(self.optionTemplate( {category: category.get("category"),
+                        text: category.get("category")} ));
+                });
+                $("form#addItemForm select").selectmenu('refresh');
             },
 
             formSubmitted: function() {

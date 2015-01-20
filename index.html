@@ -6,9 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="./css/jquery.mobile-1.4.5.css" rel="stylesheet" type="text/css"/>
     <style>
-        .ui-btn-inline:nth-of-type(2) {
-            width: 61%;
+        .ui-btn-inline:nth-of-type(1) {
+            width: 12%;
         }
+        .ui-btn-inline:nth-of-type(2) {
+            width: 60%;
+        }
+        .ui-btn-inline:nth-of-type(3) {
+            width: 8%;
+        }
+
         .palabra {
             font-family: "Arial", "Verdana", "Sans-Serif";
             font-size: 20px;
@@ -53,32 +60,24 @@
             <!--<img class="popphoto" src="css/images/palabras.jpg" style="max-height:512px;" alt="Palabras">-->
         <!--</div>-->
 
-        <div data-role="popup" id="addItemFormPopup" class="">
-                <form id="addItemForm">
-                    <div style="padding:10px 20px;">
-                        <h3>Add new word</h3>
-                        <label for="select-category-input-field" class="select">Category:</label>
-                        <select name="select-category" id="select-category-input-field" data-native-menu="false">
-                            <option value="La casa">La casa</option>
-                            <option value="Adjectivos para descibir una vivenda">Adjectivos para descibir una vivenda</option>
-                            <option value="Posicion">Posicion</option>
-                            <option value="Interrogativos">Interrogativos</option>
-                            <option value="Verbos regulares">Verbos regulares</option>
-                            <option value="Verbos irregulares">Verbos irregulares</option>
-                            <option value="Objetos de la clase">Objetos de la clase</option>
-                            <option value="Los colores">Los colores</option>
-                            <option value="El tiempo">El tiempo</option>
-                            <option value="new category">&nbsp;&nbsp;&nbsp;new category ...</option>
+        <div data-role="popup" id="addItemFormPopup">
+            <form id="addItemForm">
+                <div style="padding:10px 20px;">
+                    <h3>Add new word</h3>
+                    <div class="ui-field-contain">
+                        <label for="select-category-input-field" class="select" data-native-menu="false">Category:</label>
+                        <select name="select-category-input-field" id="select-category-input-field" data-native-menu="false">
                         </select>
-                        <label for="spanish-input-field" class="ui-hidden-accessible">Spanish:</label>
-                        <input type="text" name="spanish" id="spanish-input-field" value="" placeholder="español" data-mini="true">
-                        <label for="russian-input-field" class="ui-hidden-accessible">Russian:</label>
-                        <input type="text" name="russian" id="russian-input-field" value="" placeholder="русский" >
-                        <label for="hebrew-input-field" class="ui-hidden-accessible">Hebrew:</label>
-                        <input type="text" name="hebrew" id="hebrew-input-field" value="" placeholder="עברית" >
-                        <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</button>
-                    </div>
-                </form>
+                    </div>
+                    <label for="spanish-input-field" class="ui-hidden-accessible">Spanish:</label>
+                    <input type="text" name="spanish" id="spanish-input-field" value="" placeholder="español" data-mini="true">
+                    <label for="russian-input-field" class="ui-hidden-accessible">Russian:</label>
+                    <input type="text" name="russian" id="russian-input-field" value="" placeholder="русский" >
+                    <label for="hebrew-input-field" class="ui-hidden-accessible">Hebrew:</label>
+                    <input type="text" name="hebrew" id="hebrew-input-field" value="" placeholder="עברית" >
+                    <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</button>
+                </div>
+            </form>
         </div>
 
     </div>
