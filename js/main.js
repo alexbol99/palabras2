@@ -5,10 +5,9 @@ require.config({
     urlArgs: "bust=" + (new Date()).getTime()
 });
 require(['models/app','models/palabra','collections/categories',
-        'views/textbox','views/quiz','views/selectCategory'],
+        'views/textbox','views/quiz','views/selectCategory', 'views/addItemForm'],
     function (/*appStage, Palabra, categories, Textbox, Quiz*/) {
-        // $("#popupPalabrasLink").trigger("click");
-        $( "#popupPalabras" ).popup( "open" );
+        // $( "#popupPalabras" ).popup( "open" );
 
         Parse.initialize("nNSG5uA8wGI1tWe4kaPqX3pFFplhc0nV5UlyDj8H", "IDxfUbmW9AIn7iej2PAC7FtDAO1KvSdPuqP18iyu");
 

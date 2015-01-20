@@ -17,6 +17,9 @@
         #palabras-container {
             height: 400px;
         }
+        #add-item-button {
+            height: 44px;
+        }
     </style>
 </head>
 <body>
@@ -37,6 +40,8 @@
             <!--<option value="El tiempo">El tiempo</option>-->
         </select>
 
+        <a href="#addItemFormPopup" data-rel="popup" data-position-to="window" class="ui-btn ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-notext" id="add-item-button">Add</a>
+
         <div role="main" class="ui-content">
             <div id="palabras-container">
 
@@ -44,10 +49,36 @@
             <a href="#" class="ui-btn ui-icon-refresh ui-btn-icon-bottom" id="refresh-button"></a>
         </div><!-- /content -->
 
-        <!--<a href="#popupPalabras" id="popupPalabrasLink" data-rel="popup" data-position-to="window" data-transition="fade">a</a>-->
-        <div data-role="popup" id="popupPalabras" data-overlay-theme="b" data-theme="b" data-corners="false" data-transition="fade">
-            <!--<a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn-a ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>-->
-            <img class="popphoto" src="css/images/palabras.jpg" style="max-height:512px;" alt="Palabras">
+        <!--<div data-role="popup" id="popupPalabras" data-overlay-theme="b" data-theme="b" data-corners="false" data-transition="fade">-->
+            <!--<img class="popphoto" src="css/images/palabras.jpg" style="max-height:512px;" alt="Palabras">-->
+        <!--</div>-->
+
+        <div data-role="popup" id="addItemFormPopup" class="">
+                <form id="addItemForm">
+                    <div style="padding:10px 20px;">
+                        <h3>Add new word</h3>
+                        <label for="select-category-input-field" class="select">Category:</label>
+                        <select name="select-category" id="select-category-input-field" data-native-menu="false">
+                            <option value="La casa">La casa</option>
+                            <option value="Adjectivos para descibir una vivenda">Adjectivos para descibir una vivenda</option>
+                            <option value="Posicion">Posicion</option>
+                            <option value="Interrogativos">Interrogativos</option>
+                            <option value="Verbos regulares">Verbos regulares</option>
+                            <option value="Verbos irregulares">Verbos irregulares</option>
+                            <option value="Objetos de la clase">Objetos de la clase</option>
+                            <option value="Los colores">Los colores</option>
+                            <option value="El tiempo">El tiempo</option>
+                            <option value="new category">&nbsp;&nbsp;&nbsp;new category ...</option>
+                        </select>
+                        <label for="spanish-input-field" class="ui-hidden-accessible">Spanish:</label>
+                        <input type="text" name="spanish" id="spanish-input-field" value="" placeholder="español" data-mini="true">
+                        <label for="russian-input-field" class="ui-hidden-accessible">Russian:</label>
+                        <input type="text" name="russian" id="russian-input-field" value="" placeholder="русский" >
+                        <label for="hebrew-input-field" class="ui-hidden-accessible">Hebrew:</label>
+                        <input type="text" name="hebrew" id="hebrew-input-field" value="" placeholder="עברית" >
+                        <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</button>
+                    </div>
+                </form>
         </div>
 
     </div>
