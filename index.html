@@ -65,19 +65,39 @@
                 <div style="padding:10px 20px;">
                     <h3>Add new word</h3>
                     <div class="ui-field-contain">
-                        <label for="select-category-input-field" class="select" data-native-menu="false">Category:</label>
-                        <select name="select-category-input-field" id="select-category-input-field" data-native-menu="false">
+                        <label for="select-category-add-input-field" class="select" data-native-menu="false">Category:</label>
+                        <select name="select-category-add-input-field" id="select-category-add-input-field" data-native-menu="false">
                         </select>
                     </div>
-                    <label for="spanish-input-field" class="ui-hidden-accessible">Spanish:</label>
-                    <input type="text" name="spanish" id="spanish-input-field" value="" placeholder="español" data-mini="true">
-                    <label for="russian-input-field" class="ui-hidden-accessible">Russian:</label>
-                    <input type="text" name="russian" id="russian-input-field" value="" placeholder="русский" >
-                    <label for="hebrew-input-field" class="ui-hidden-accessible">Hebrew:</label>
-                    <input type="text" name="hebrew" id="hebrew-input-field" value="" placeholder="עברית" >
+                    <label for="spanish-add-input-field" class="ui-hidden-accessible">Spanish:</label>
+                    <input type="text" name="spanish" id="spanish-add-input-field" value="" placeholder="español" data-mini="true">
+                    <label for="russian-add-input-field" class="ui-hidden-accessible">Russian:</label>
+                    <input type="text" name="russian" id="russian-add-input-field" value="" placeholder="русский" >
+                    <label for="hebrew-add-input-field" class="ui-hidden-accessible">Hebrew:</label>
+                    <input type="text" name="hebrew" id="hebrew-add-input-field" value="" placeholder="עברית" >
                     <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</button>
                 </div>
             </form>
+        </div>
+
+        <div data-role="popup" id="editItemFormPopup">
+                <form id="editItemForm">
+                    <div style="padding:10px 20px;">
+            <h3>Edit word</h3>
+            <div class="ui-field-contain">
+                <label for="select-category-edit-input-field" class="select" data-native-menu="false">Category:</label>
+                <select name="select-category-edit-input-field" id="select-category-edit-input-field" data-native-menu="false">
+                </select>
+            </div>
+                        <label for="spanish-edit-input-field" class="ui-hidden-accessible">Spanish:</label>
+                        <input type="text" name="spanish" id="spanish-edit-input-field" value="" placeholder="español" data-mini="true">
+                        <label for="russian-edit-input-field" class="ui-hidden-accessible">Russian:</label>
+                        <input type="text" name="russian" id="russian-edit-input-field" value="" placeholder="русский" >
+                        <label for="hebrew-edit-input-field" class="ui-hidden-accessible">Hebrew:</label>
+                        <input type="text" name="hebrew" id="hebrew-edit-input-field" value="" placeholder="עברית" >
+                        <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Edit</button>
+                    </div>
+                </form>
         </div>
 
     </div>

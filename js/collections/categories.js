@@ -2,7 +2,7 @@
  * Created by Owner on 1/17/15.
  */
 define(['models/app','models/palabra'],
-    function (app, palabra) {
+    function (app, PalabraParseObject) {
         var self;
 
         var Categories = Backbone.Collection.extend({
@@ -14,9 +14,9 @@ define(['models/app','models/palabra'],
 
             sync: function() {
                 var categories;
-                var query = new Parse.Query(palabra);
-                query.select("category");
-                query.limit(1000);
+                var query = new Parse.Query(PalabraParseObject)
+                    .select("category")
+                    .limit(1000);
 
                 query.find().then(function(results) {
                     results.forEach( function(result) {

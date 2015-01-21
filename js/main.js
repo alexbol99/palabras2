@@ -5,7 +5,8 @@ require.config({
     urlArgs: "bust=" + (new Date()).getTime()
 });
 require(['models/app','models/palabra','collections/categories',
-        'views/textbox','views/quiz','views/selectCategory', 'views/addItemForm'],
+        'views/textbox','views/quiz','views/selectCategory',
+        'views/addItemForm', 'views/editItemForm'],
     function (/*appStage, Palabra, categories, Textbox, Quiz*/) {
         // $( "#popupPalabras" ).popup( "open" );
 

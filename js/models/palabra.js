@@ -8,10 +8,9 @@ define(['models/app'],
 
             addToParse: function() {
                 var self = this;
-                this.validate();
                 this.save( null, {
                         success: function (palabra) {
-                            alert('New object created with objectId:' + palabra.id);
+                            alert('New word added: ' + palabra.get("spanish"));
                             self.trigger("added");
                         },
                         error: function (gameScore, error) {
@@ -19,10 +18,6 @@ define(['models/app'],
                         }
                     }
                 );
-            },
-
-            validate: function() {
-
             }
         });
     });

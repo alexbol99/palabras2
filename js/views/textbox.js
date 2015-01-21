@@ -1,8 +1,8 @@
 /**
  * Created by alexbol on 1/8/2015.
  */
-define(['models/app'],
-    function (app) {
+define(['models/app', 'views/editItemForm'],
+    function (app, editItemForm) {
         return Backbone.View.extend({
 
             className: "palabra",
@@ -26,7 +26,8 @@ define(['models/app'],
                     var position = $(this).position();
                     if ( Math.abs(position.top - this.origTop) <= 10 &&
                         Math.abs(position.left - this.origLeft) <= 10) {
-                        alert("long tap event");
+                        // alert("long tap event");
+                        editItemForm.openForm(this.model);
                     }
                 });
 
@@ -35,6 +36,7 @@ define(['models/app'],
             render: function () {
                 $(this.el).html(this.model.text);
                 this.el.id = this.model.id;          // augment element with id for matching
+                this.el.model = this.model;          // augment with model for edit form initialization
 
                 $(this.el).hide().appendTo("#palabras-container").fadeIn(1500);
                 // $("#palabras-container").append(this.el);

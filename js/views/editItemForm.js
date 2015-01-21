@@ -4,9 +4,9 @@
 define(['collections/categories','models/palabra'],
     function (categories, PalabraParseObject) {
         var self;
-        var AddFormView = Backbone.View.extend({
+        var EditFormView = Backbone.View.extend({
 
-            el: "form#addItemForm",
+            el: "form#editItemForm",
 
             optionTemplate: _.template('<option value="<%= category %>" ><%= text %></option>'),
 
@@ -17,33 +17,42 @@ define(['collections/categories','models/palabra'],
             initialize: function () {
                 self = this;
                 this.category = "";
-                $("#add-item-button").on("click", this.openForm);
+                // $("#add-item-button").on("click", this.openForm);
             },
 
-            openForm: function() {
+            openForm: function(model) {
                 // Fill-in select options
-                $("form#addItemForm select").empty();
+                $("form#editItemForm select").empty();
                 categories.each( function(category) {
-                    $("form#addItemForm select").append(self.optionTemplate( {category: category.get("category"),
+                    $("form#editItemForm select").append(self.optionTemplate( {category: category.get("category"),
                         text: category.get("category")} ));
                 });
-                $("form#addItemForm select").selectmenu('refresh');
-                this.category = $("#select-category-add-input-field").val();
-                // Form will be opened automatically by JQuery Mobile
+                $("form#editItemForm select").selectmenu('refresh');
+
+                var spanish = $("#spanish-edit-input-field").val(model.text);
+                /*
+                this.category = $("#select-category-edit-input-field").val(model.);
+                var russian = $("#russian-edit-input-field").val();
+                var hebrew = $("#hebrew-edit-input-field").val();
+                */
+
+                this.category = $("#select-category-edit-input-field").val();
+
+                $("#editItemFormPopup").popup("open");
             },
 
             resetForm: function() {
                 $(self.el)[0].reset();
-                $("#select-category-add-input-field").val(self.category);
-                categories.increaseCounter(self.category);
+                $("#select-category-edit-input-field").val(self.category);
+                // categories.increaseCounter(self.category);   to be done: increase + decrease
             },
 
 
             formSubmitted: function() {
-                this.category = $("#select-category-add-input-field").val();
-                var spanish = $("#spanish-add-input-field").val();
-                var russian = $("#russian-add-input-field").val();
-                var hebrew = $("#hebrew-add-input-field").val();
+                this.category = $("#select-category-edit-input-field").val();
+                var spanish = $("#spanish-edit-input-field").val();
+                var russian = $("#russian-edit-input-field").val();
+                var hebrew = $("#hebrew-edit-input-field").val();
 
                 var palabra = new PalabraParseObject();
                 palabra.set("category", this.category);
@@ -58,11 +67,11 @@ define(['collections/categories','models/palabra'],
                 queryExist.find({
                     success: function(results) {
                         if (results.length == 0) {
-                            palabra.addToParse();       // save to cloud and trigger event "added" on success
+                            // palabra.addToParse();       // update in cloud and trigger event "??" on success
                         }
                         else {
-                            // popup "already exist"
-                            alert("word '" + palabra.get("spanish") + "' already exist");
+
+
                         }
                     },
                     error: function(error) {
@@ -74,5 +83,5 @@ define(['collections/categories','models/palabra'],
             }
         });
 
-        return new AddFormView();
+        return new EditFormView();
     });
