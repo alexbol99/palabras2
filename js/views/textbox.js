@@ -27,7 +27,7 @@ define(['models/app', 'views/editItemForm'],
                     if ( Math.abs(position.top - this.origTop) <= 10 &&
                         Math.abs(position.left - this.origLeft) <= 10) {
                         // alert("long tap event");
-                        editItemForm.openForm(this.model);
+                        editItemForm.openForm(this.model.palabra);
                     }
                 });
 
@@ -35,17 +35,21 @@ define(['models/app', 'views/editItemForm'],
 
             render: function () {
                 $(this.el).html(this.model.text);
-                this.el.id = this.model.id;          // augment element with id for matching
-                this.el.model = this.model;          // augment with model for edit form initialization
+                this.el.id = this.model.palabra.cid;     // augment element with id for matching
+                this.el.model = this.model;              // augment with model for edit form initialization
 
                 $(this.el).hide().appendTo("#palabras-container").fadeIn(1500);
                 // $("#palabras-container").append(this.el);
 
-                var left = this.model.leftside ? 0 : $(this.el).parent().width()/2;
-                var top = this.model.y;
+                var containerWidth = $(this.el).parent().width();
+                var left = this.model.leftside ? 0 : containerWidth/2;
+                var top = this.model.y - 10;
 
                 $(this.el).parent().css({position: 'relative'});
                 $(this.el).css({top: top, left: left, position:'absolute'});
+
+                $(this.el).width( 0.4*containerWidth );
+                $(this.el).height( $(this.el).height() + 10);
 
                 var position = $(this.el).position();
                 this.el.origTop = position.top;

@@ -65,7 +65,7 @@ define(['models/app', 'models/palabra', 'views/textbox'],
                     if (palabra) {
                         var spanish = new Textbox({
                             model: {
-                                id: palabra.cid,
+                                palabra: palabra,
                                 leftside: true,
                                 text: palabra.get("spanish"),
                                 y: y_position
@@ -86,7 +86,7 @@ define(['models/app', 'models/palabra', 'views/textbox'],
                     if (palabra) {
                         var other = new Textbox({
                             model: {
-                                id: palabra.cid,
+                                palabra: palabra,
                                 leftside: false,
                                 text: palabra.get(otherLanguage),
                                 y: y_position,

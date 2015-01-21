@@ -35,7 +35,7 @@ define(['collections/categories','models/palabra'],
             resetForm: function() {
                 $(self.el)[0].reset();
                 $("#select-category-add-input-field").val(self.category);
-                categories.increaseCounter(self.category);
+                categories.changeCounter(self.category, 1);
             },
 
 

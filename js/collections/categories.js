@@ -34,10 +34,10 @@ define(['models/app','models/palabra'],
                 });
             },
 
-            increaseCounter: function(category) {
+            changeCounter: function(category, delta) {
                 var model = this.findWhere({"category": category});
                 if (model != undefined) {
-                    model.set("count", model.get("count")+1);
+                    model.set("count", model.get("count")+delta);
                 }
             }
 
