@@ -15,6 +15,15 @@ define(['models/app', 'views/editItemForm'],
                         drop: function( event, ui ) {
                             var other = ui.draggable[0];
                             if (this.id == other.id) {
+
+                                if ('speechSynthesis' in window) {
+                                    // Synthesis support. Make your web apps talk!
+                                    var msg = new SpeechSynthesisUtterance(this.model.palabra.get("spanish"));
+                                    msg.lang = 'es-ES';
+                                    msg.rate = 1; // 0.1 to 10
+                                    window.speechSynthesis.speak(msg);
+                                }
+
                                 $(this).html($(this).text() + " - " + $(other).text());
                                 $(this).fadeOut(1500);
                                 $(other).remove();
