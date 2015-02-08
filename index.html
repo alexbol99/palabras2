@@ -27,34 +27,30 @@
         #add-item-button {
             height: 44px;
         }
+        #toggle-sound-button {
+            height: 42px;
+        }
+
     </style>
 </head>
 <body>
-    <div data-role="page">
+    <div data-role="page" id="div-main">
         <select name="language" id="language"  data-inline="true" data-icon="gear" data-native-menu="false">
             <option value="russian">RU</option>
             <option value="hebrew">HE</option>
         </select>
         <select name="category" id="selectCategory"  data-inline="true" data-native-menu="false">
-            <!--<option value="La casa">La casa</option>-->
-            <!--<option value="Adjectivos para descibir una vivenda">Adjectivos para descibir una vivenda</option>-->
-            <!--<option value="Posicion">Posicion</option>-->
-            <!--<option value="Interrogativos">Interrogativos</option>-->
-            <!--<option value="Verbos regulares">Verbos regulares</option>-->
-            <!--<option value="Verbos irregulares">Verbos irregulares</option>-->
-            <!--<option value="Objetos de la clase">Objetos de la clase</option>-->
-            <!--<option value="Los colores">Los colores</option>-->
-            <!--<option value="El tiempo">El tiempo</option>-->
         </select>
 
-        <a href="#addItemFormPopup" data-rel="popup" data-position-to="window" class="ui-btn ui-shadow ui-btn-inline ui-icon-plus ui-btn-icon-notext" id="add-item-button">Add</a>
+        <!--<a href="#addItemFormPopup" data-rel="popup" data-position-to="window" class="ui-btn ui-shadow  ui-icon-plus ui-btn-icon-notext" id="add-item-button">Add</a>-->
+        <a href="#" data-position-to="window" class="ui-btn ui-btn-inline ui-shadow ui-icon-audio ui-btn-icon-notext" id="toggle-sound-button"></a>
 
         <div role="main" class="ui-content">
             <div id="palabras-container">
 
             </div>
-            <a href="#" class="ui-btn ui-icon-refresh ui-btn-icon-bottom" id="refresh-button"></a>
         </div><!-- /content -->
+        <a href="#" class="ui-btn ui-icon-refresh ui-btn-icon-bottom" id="refresh-button"></a>
 
         <!--<div data-role="popup" id="popupPalabras" data-overlay-theme="b" data-theme="b" data-corners="false" data-transition="fade">-->
             <!--<img class="popphoto" src="css/images/palabras.jpg" style="max-height:512px;" alt="Palabras">-->

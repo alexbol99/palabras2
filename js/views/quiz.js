@@ -7,13 +7,18 @@ define(['models/app', 'models/palabra', 'views/textbox'],
 
         var Quiz = Backbone.View.extend({
 
+            el: "div#div-main",
+
             initialize: function () {
                 self = this;
                 this.maxNum = (window.orientation == undefined || window.orientation == 0) ? 8 : 4;
-
-                $("#language").on("change", this.refresh_cb);
-                $("#refresh-button").on("click", this.refresh_cb);
                 app.on("match", this.match, this);
+            },
+
+            events: {
+                "click #toggle-sound-button" : "toggleSound",
+                "click #refresh-button" : "refresh_cb",
+                "change #language" : "refresh_cb"
             },
 
             retrieveFromParse: function(category) {
@@ -148,6 +153,17 @@ define(['models/app', 'models/palabra', 'views/textbox'],
 
             clearAll: function() {
                 $("#palabras-container").empty();
+            },
+
+            toggleSound: function(event) {
+                var button = event.currentTarget;
+                if (app.get("sound")) {
+                    $(button).removeClass('ui-icon-audio');
+                }
+                else {
+                    $(button).addClass('ui-icon-audio');
+                }
+                app.set("sound", !app.get("sound"));
             }
         });
 

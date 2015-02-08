@@ -16,7 +16,7 @@ define(['models/app', 'views/editItemForm'],
                             var other = ui.draggable[0];
                             if (this.id == other.id) {
 
-                                if ('speechSynthesis' in window) {
+                                if ('speechSynthesis' in window && app.get("sound")) {
                                     // Synthesis support. Make your web apps talk!
                                     var msg = new SpeechSynthesisUtterance(this.model.palabra.get("spanish"));
                                     msg.lang = 'es-ES';
