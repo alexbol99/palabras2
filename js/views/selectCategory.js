@@ -1,8 +1,8 @@
 /**
  * Created by Owner on 1/15/15.
  */
-define(['collections/categories', 'views/quiz'],
-    function (categories, quiz) {
+define(['collections/categories', 'views/quizView'],
+    function (categories, quizView) {
         var self;
         var SelectCategoryView = Backbone.View.extend({
 
@@ -31,7 +31,7 @@ define(['collections/categories', 'views/quiz'],
             },
 
             categoryChanged: function() {
-                quiz.start( $(this.el).val() );
+                quizView.start( $(this.el).val() );
             },
 
             increaseCounter: function(model) {

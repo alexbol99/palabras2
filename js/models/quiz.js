@@ -1,11 +1,11 @@
 /**
- * Created by alexbol on 1/8/2015.
+ * Created by alexbol on 2/9/2015.
  */
 define(['models/app'],
-    function (app) {
+    function () {
         return Parse.Object.extend({
-            className: app.get("currentDictionary"),           // "Palabra",
-
+            className: "Quiz"
+/*
             addToParse: function() {
                 var self = this;
                 this.save( null, {
@@ -32,5 +32,6 @@ define(['models/app'],
                     }
                 );
             }
+*/
         });
     });
