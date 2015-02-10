@@ -4,7 +4,8 @@
 require.config({
     urlArgs: "bust=" + (new Date()).getTime()
 });
-require(['models/quiz','models/app','models/palabra','collections/categories',
+require(['models/quiz','models/app','models/palabra',
+        'collections/categories','collections/quizItems',
         'views/textbox','views/quizView','views/selectCategory',
         'views/addItemForm', 'views/editItemForm'],
     function (Quiz /*appStage, Palabra, categories, Textbox, Quiz*/) {
@@ -30,7 +31,7 @@ require(['models/quiz','models/app','models/palabra','collections/categories',
                 var translation = quiz.get("Translation");
                 var translationName = translation.get("Name");
 
-                alert (termName + " - " + translationName);
+                // alert (termName + " - " + translationName);
             });
         });
 

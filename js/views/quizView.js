@@ -1,8 +1,8 @@
 /**
  * Created by alexbol on 1/8/2015.
  */
-define(['models/app', 'models/palabra', 'views/textbox'],
-    function (app, PalabraParseObject, Textbox) {
+define(['models/app', 'collections/quizItems', 'views/textbox'],
+    function (app, QuizItems, Textbox) {
         var self;
 
         var Quiz = Backbone.View.extend({
@@ -22,24 +22,10 @@ define(['models/app', 'models/palabra', 'views/textbox'],
             },
 
             retrieveFromParse: function(category) {
-                // var PalabraParseObject = Parse.Object.extend("Palabra");
-                var PalabrasParseCollection = Parse.Collection.extend({
-                    model: PalabraParseObject,
-                    query: (new Parse.Query(PalabraParseObject)).equalTo("category", category)
+                this.quizItems = new QuizItems(category);
+                this.quizItems.on("sync", function() {
+                    self.refresh();
                 });
-                var collection = new PalabrasParseCollection();
-                collection.fetch({
-                    success: function(collection) {
-                        self.palabrasCategory = collection;
-                        self.refresh();
-                    },
-                    error: function(collection, error) {
-                        // The collection could not be retrieved.
-                        console.warn(error.message);
-                    }
-                });
-
-                return collection;
             },
 
             start: function( category ) {
@@ -60,7 +46,7 @@ define(['models/app', 'models/palabra', 'views/textbox'],
             refresh: function () {
                 this.clearAll();
 
-                this.palabras = this.getRandom();
+                this.palabras = this.quizItems.getRandom(this.maxNum);
 
                 this.curNum = this.palabras.length;
 
@@ -81,7 +67,7 @@ define(['models/app', 'models/palabra', 'views/textbox'],
                     }
                 }, this);
 
-                this.shuffle(this.palabras);
+                this.quizItems.shuffle(this.palabras);
 
                 var otherLanguage = $("#language").val();
                 var hebrew = otherLanguage == "hebrew" ? true : false
@@ -102,53 +88,6 @@ define(['models/app', 'models/palabra', 'views/textbox'],
                         y_position += 50;
                     }
                 });
-            },
-
-            getRandom: function() {
-                var palabras = [];
-                var inds = [];
-                var maxnum = this.maxNum;
-                var i;
-
-                if (this.palabrasCategory.length <= maxnum) {
-                    this.palabrasCategory.forEach(function(p) {
-                        palabras.push(p);
-                    });
-                    return palabras;
-                }
-
-                while (inds.length < maxnum) {
-                    i = Math.floor((Math.random() * (this.palabrasCategory.length-1)) + 1);
-                    if (inds.indexOf(i) == -1) {
-                        inds.push(i);
-                    }
-                }
-
-                inds.forEach(function(i) {
-                    palabras.push(this.palabrasCategory.at(i));
-                }, this);
-                return palabras;
-            },
-
-            // http://stackoverflow.com/questions/6274339/how-can-i-shuffle-an-array-in-javascript
-            shuffle: function(array) {
-                var counter = array.length, temp, index;
-
-                // While there are elements in the array
-                while (counter > 0) {
-                    // Pick a random index
-                    index = Math.floor(Math.random() * counter);
-
-                    // Decrease counter by 1
-                    counter--;
-
-                    // And swap the last element with it
-                    temp = array[counter];
-                    array[counter] = array[index];
-                    array[index] = temp;
-                }
-
-                return array;
             },
 
             clearAll: function() {
