@@ -4,11 +4,12 @@
 require.config({
     urlArgs: "bust=" + (new Date()).getTime()
 });
-require(['models/quiz','models/app','models/palabra',
+require(['views/loginView','models/quiz',
+        'models/app','models/palabra',
         'collections/categories','collections/quizItems',
         'views/textbox','views/quizView','views/selectCategory',
         'views/addItemForm', 'views/editItemForm'],
-    function (Quiz /*appStage, Palabra, categories, Textbox, Quiz*/) {
+    function (LoginView, Quiz /*appStage, Palabra, categories, Textbox, Quiz*/) {
         // $( "#popupPalabras" ).popup( "open" );
 
         Parse.initialize("nNSG5uA8wGI1tWe4kaPqX3pFFplhc0nV5UlyDj8H", "IDxfUbmW9AIn7iej2PAC7FtDAO1KvSdPuqP18iyu");
@@ -23,7 +24,8 @@ require(['models/quiz','models/app','models/palabra',
             });
 
             // Run code after the Facebook SDK is loaded.
-            FacebookLogIn();
+            // FacebookLogIn();
+            var loginView = new LoginView();
         };
 
         (function(d, s, id){
@@ -33,43 +35,6 @@ require(['models/quiz','models/app','models/palabra',
             js.src = "//connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
-
-        function FacebookLogIn() {
-            var currentUser = null; //Parse.User.current();
-
-            if (currentUser) {
-                goOn();
-            }
-            else {
-                Parse.FacebookUtils.logIn("user_friends", {
-                    success: function(user) {
-                        if (!user.existed()) {
-                            // welcome new user
-                            alert("welcome new user!");
-                        } else {
-                            // welcome existing user
-                            alert("welcome back!");
-                        }
-                        goOn();
-                    },
-                    error: function(user, error) {
-                        alert("User cancelled the Facebook login or did not fully authorize.");
-                    }
-                });
-            }
-        }
-
-        function goOn() {
-            var currentUser = Parse.User.current();
-            if (currentUser) {
-                var id = currentUser.get("authData").facebook.id;
-                FB.api('/' + id, function(response) {
-                    // console.log(response);
-                    alert("hello, " + response.name);
-                });
-                // do stuff with the user
-            }
-        }
 
         var query = new Parse.Query(Quiz)
             .include("Translation")
