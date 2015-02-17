@@ -4,7 +4,7 @@
 require.config({
     urlArgs: "bust=" + (new Date()).getTime()
 });
-require(['views/loginView','models/quiz', 'views/dashboardView',
+require(['views/loginView','models/quiz', 'views/dashBoardView',
         'models/app','models/palabra',
         'collections/quizzes',
         'collections/categories','collections/quizItems',
