@@ -4,12 +4,13 @@
 require.config({
     urlArgs: "bust=" + (new Date()).getTime()
 });
-require(['views/loginView','models/quiz',
+require(['views/loginView','models/quiz', 'views/dashboardView',
         'models/app','models/palabra',
+        'collections/quizzes',
         'collections/categories','collections/quizItems',
         'views/textbox','views/quizView','views/selectCategory',
         'views/addItemForm', 'views/editItemForm'],
-    function (LoginView, Quiz /*appStage, Palabra, categories, Textbox, Quiz*/) {
+    function (LoginView, Quiz, DashBoardView /*appStage, Palabra, categories, Textbox, Quiz*/) {
         // $( "#popupPalabras" ).popup( "open" );
 
         Parse.initialize("nNSG5uA8wGI1tWe4kaPqX3pFFplhc0nV5UlyDj8H", "IDxfUbmW9AIn7iej2PAC7FtDAO1KvSdPuqP18iyu");
@@ -36,27 +37,37 @@ require(['views/loginView','models/quiz',
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        var query = new Parse.Query(Quiz)
-            .include("Translation")
-            .include("Term");
+        var Router = Backbone.Router.extend({
+            routes: {
+                '': 'index',
+                'quizzes' : 'goDashBoard',
+                '*default': 'goDefault'
+            },
+            index: function() {
+                var loginView = new LoginView();
+            },
 
-            /*
-            .select("category")
-            .limit(1000);
-            */
+            goDashBoard: function() {
+                var dashboardView = new DashBoardView();
+            },
 
-        query.find().then(function(quiz_array) {
-            var r = quiz_array;
-            quiz_array.forEach( function(quiz) {
-                var term = quiz.get("Term");
-                var termName = term.get("Name");
+            //goPage: function(name, hashtag) {
+            //    require( ['models/'+name], function(page) {
+            //        var pageView = new DocPageView({model: page});
+            //        if (hashtag != null) {
+            //            pageView.scrollTo(hashtag);
+            //        }
+            //    });
+            //},
 
-                var translation = quiz.get("Translation");
-                var translationName = translation.get("Name");
-
-                // alert (termName + " - " + translationName);
-            });
+            goDefault: function(param) {
+                $(document.body).append("This route is not handled.. you tried to access: "+  param);
+            }
         });
+
+        var router = new Router();
+
+        Backbone.history.start();
 
     });
 

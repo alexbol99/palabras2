@@ -20,7 +20,8 @@ define(['models/app', 'views/editItemForm'],
                                     // Synthesis support. Make your web apps talk!
                                     var msg = new SpeechSynthesisUtterance(this.model.palabra.get("spanish"));
                                     msg.lang = 'es-ES';
-                                    msg.rate = 1; // 0.1 to 10
+                                    msg.rate = 0.9; // 0.1 to 10
+                                    msg.pitch = 0.9; //0 to 2
                                     window.speechSynthesis.speak(msg);
                                 }
 
