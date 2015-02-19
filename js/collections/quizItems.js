@@ -11,8 +11,24 @@ define(['models/app','models/palabra'],
 
             initialize: function(category) {
                 if (category) {
-                    this.query.equalTo("category", category);
-                    this.fetch({reset: true});
+                    if (category == "Palabros nuevos") {
+                        var twoWeeks = (14 * 24 * 3600 * 1000);
+                        var currentDate = new Date();
+                        var newItemsDate = new Date(currentDate.getTime() - (twoWeeks));
+
+                        this.query.greaterThanOrEqualTo( "createdAt", newItemsDate );
+                        if (this.query._where.category) {
+                            delete this.query._where.category;
+                        }
+                        this.fetch({reset: true});
+                    }
+                    else {
+                        this.query.equalTo("category", category);
+                        if (this.query._where.createdAt) {
+                            delete this.query._where.createdAt
+                        }
+                        this.fetch({reset: true});
+                    }
                 }
             },
 

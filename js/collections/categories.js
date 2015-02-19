@@ -18,6 +18,15 @@ define(['models/app','models/palabra'],
                     .select("category")
                     .limit(1000);
 
+                var twoWeeks = (14 * 24 * 3600 * 1000);
+                var currentDate = new Date();
+                var newItemsDate = new Date(currentDate.getTime() - (twoWeeks));
+
+                var modelNewWords = this.add({
+                    "category": "Palabros nuevos",
+                    "count": 0
+                });
+
                 query.find().then(function(results) {
                     results.forEach( function(result) {
                         var category = result.get("category");
@@ -29,6 +38,11 @@ define(['models/app','models/palabra'],
                             });
                         }
                         model.set("count", model.get("count")+1);
+
+                        /* Increase counter if item considered as new item */
+                        if (result.createdAt.getTime() > newItemsDate.getTime()) {
+                            modelNewWords.set("count", modelNewWords.get("count")+1);
+                        }
                     });
                     self.trigger("ready");
                 });
