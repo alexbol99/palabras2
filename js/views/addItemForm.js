@@ -17,7 +17,7 @@ define(['collections/categories','models/palabra'],
             initialize: function () {
                 self = this;
                 this.category = "";
-                $("#add-item-button").on("click", this.openForm);
+                $("#add-button").on("click", this.openForm);
             },
 
             openForm: function() {

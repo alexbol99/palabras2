@@ -12,13 +12,34 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
             initialize: function () {
                 self = this;
                 this.maxNum = (window.orientation == undefined || window.orientation == 0) ? 8 : 4;
+                app.on("change:selectedCategory", this.start, this);
                 app.on("match", this.match, this);
+                app.on("change:mode", this.start, this);
+                $("#add-button").hide();
             },
 
             events: {
                 "click #toggle-sound-button" : "toggleSound",
                 "click #refresh-button" : "refresh_cb",
-                "change #language" : "refresh_cb"
+                "click #play-button" : "setAppPlay",
+                "click #edit-button" : "setAppEdit"
+                //"change #language" : "refresh_cb"
+            },
+
+            setAppMode: function(event) {
+                app.set("mode", $(event.currentTarget).text());
+            },
+
+            setAppPlay: function (event) {
+                app.set("mode", $(event.currentTarget).text());
+                $("#add-button").hide();
+                $("#refresh-button").show();
+            },
+
+            setAppEdit: function (event) {
+                app.set("mode", $(event.currentTarget).text());
+                $("#add-button").show();
+                $("#refresh-button").hide();
             },
 
             retrieveFromParse: function(category) {
@@ -28,8 +49,8 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
                 });
             },
 
-            start: function( category ) {
-                this.retrieveFromParse(category);
+            start: function() {
+                this.retrieveFromParse(app.get("selectedCategory"));
             },
 
             refresh_cb: function() {
@@ -46,7 +67,12 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
             refresh: function () {
                 this.clearAll();
 
-                this.palabras = this.quizItems.getRandom(this.maxNum);
+                if (app.get("mode") == "Play") {
+                    this.palabras = this.quizItems.getRandom(this.maxNum);
+                }
+                else {
+                    this.palabras = this.quizItems;
+                }
 
                 this.curNum = this.palabras.length;
 
@@ -67,9 +93,11 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
                     }
                 }, this);
 
-                this.quizItems.shuffle(this.palabras);
+                if (app.get("mode") == "Play") {
+                    this.quizItems.shuffle(this.palabras);
+                }
 
-                var otherLanguage = $("#language").val();
+                var otherLanguage = "russian";  // $("#language").val();
                 var hebrew = otherLanguage == "hebrew" ? true : false
 
                 var y_position = 0;
@@ -104,6 +132,7 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
                 }
                 app.set("sound", !app.get("sound"));
             }
+
         });
 
         return new Quiz();

@@ -10,7 +10,9 @@ define(['models/app', 'views/editItemForm'],
             initialize: function () {
                 this.render();
 
-                $(this.el).draggable({ containment: "parent", cursor: "move", revert: true });
+                if (app.get("mode") == "Play") {
+                    $(this.el).draggable({containment: "parent", cursor: "move", revert: true});
+                }
                 $(this.el).droppable({
                         drop: function( event, ui ) {
                             var other = ui.draggable[0];
@@ -38,6 +40,19 @@ define(['models/app', 'views/editItemForm'],
                         Math.abs(position.left - this.origLeft) <= 10) {
                         // alert("long tap event");
                         editItemForm.openForm(this.model.palabra);
+                    }
+                });
+
+                $(this.el).on( "click", function(event) {
+                    if (app.get("mode") == "Edit" && app.get("sound")) {
+                        if ('speechSynthesis' in window) {
+                            // Synthesis support. Make your web apps talk!
+                            var msg = new SpeechSynthesisUtterance(this.model.palabra.get("spanish"));
+                            msg.lang = 'es-ES';
+                            msg.rate = 0.9; // 0.1 to 10
+                            msg.pitch = 0.9; //0 to 2
+                            window.speechSynthesis.speak(msg);
+                        }
                     }
                 });
 

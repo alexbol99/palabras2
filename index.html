@@ -7,15 +7,21 @@
     <link href="./css/jquery.mobile-1.4.5.css" rel="stylesheet" type="text/css"/>
     <style>
         .ui-btn-inline:nth-of-type(1) {
-            width: 12%;
+            width: 74%;
         }
-        .ui-btn-inline:nth-of-type(2) {
-            width: 60%;
-        }
-        .ui-btn-inline:nth-of-type(3) {
+        #toggle-sound-button {
             width: 8%;
+            height: 42px;
+        }
+        #refresh-button {
+            width: 8%;
+            height: 42px;
         }
 
+        #add-button {
+            width: 8%;
+            height: 42px;
+        }
         .palabra {
             font-family: "Arial", "Verdana", "Sans-Serif";
             font-size: 20px;
@@ -24,38 +30,32 @@
         #palabras-container {
             height: 400px;
         }
-        #add-item-button {
-            height: 44px;
-        }
-        #toggle-sound-button {
-            height: 42px;
-        }
 
     </style>
 </head>
 <body>
     <div data-role="page" id="div-main">
-        <select name="language" id="language"  data-inline="true" data-icon="gear" data-native-menu="false">
-            <option value="russian">RU</option>
-            <!--<option value="hebrew">HE</option>-->
-        </select>
         <select name="category" id="selectCategory"  data-inline="true" data-native-menu="false">
 
         </select>
-
-        <!--<a href="#addItemFormPopup" data-rel="popup" data-position-to="window" class="ui-btn ui-shadow  ui-icon-plus ui-btn-icon-notext" id="add-item-button">Add</a>-->
         <a href="#" data-position-to="window" class="ui-btn ui-btn-inline ui-shadow ui-icon-audio ui-btn-icon-notext" id="toggle-sound-button"></a>
+        <a href="#" data-position-to="window" class="ui-btn ui-btn-inline ui-shadow ui-icon-refresh ui-btn-icon-notext" id="refresh-button"></a>
+        <a href="#addItemFormPopup" data-position-to="window" data-rel="popup" class="ui-btn ui-btn-inline ui-shadow ui-icon-plus ui-btn-icon-notext" id="add-button">Add</a>
 
         <div role="main" class="ui-content">
             <div id="palabras-container">
 
             </div>
         </div><!-- /content -->
-        <a href="#" class="ui-btn ui-icon-refresh ui-btn-icon-bottom" id="refresh-button"></a>
 
-        <!--<div data-role="popup" id="popupPalabras" data-overlay-theme="b" data-theme="b" data-corners="false" data-transition="fade">-->
-            <!--<img class="popphoto" src="css/images/palabras.jpg" style="max-height:512px;" alt="Palabras">-->
-        <!--</div>-->
+        <fieldset class="ui-grid-a">
+            <div class="ui-block-a">
+                <a href="#"  data-role="button" id="play-button">Play</a>
+            </div>
+            <div class="ui-block-b">
+                <a href="#"  data-role="button" id="edit-button">Edit</a>
+            </div>
+        </fieldset>
 
         <div data-role="popup" id="addItemFormPopup">
             <form id="addItemForm">
@@ -70,8 +70,6 @@
                     <input type="text" name="spanish" id="spanish-add-input-field" value="" placeholder="español" data-mini="true">
                     <label for="russian-add-input-field" class="ui-hidden-accessible">Russian:</label>
                     <input type="text" name="russian" id="russian-add-input-field" value="" placeholder="русский" >
-                    <label for="hebrew-add-input-field" class="ui-hidden-accessible">Hebrew:</label>
-                    <input type="text" name="hebrew" id="hebrew-add-input-field" value="" placeholder="עברית" >
                     <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Add</button>
                 </div>
             </form>
@@ -86,12 +84,10 @@
                             <select name="select-category-edit-input-field" id="select-category-edit-input-field" data-native-menu="false">
                             </select>
                         </div>
-                        <label for="spanish-edit-input-field" class="">Spanish:</label>
+                        <label for="spanish-edit-input-field" class="ui-hidden-accessible" class="">Spanish:</label>
                         <input type="text" name="spanish" id="spanish-edit-input-field" value="" placeholder="español" data-mini="true">
                         <label for="russian-edit-input-field" class="ui-hidden-accessible">Russian:</label>
                         <input type="text" name="russian" id="russian-edit-input-field" value="" placeholder="русский" >
-                        <label for="hebrew-edit-input-field" class="ui-hidden-accessible">Hebrew:</label>
-                        <input type="text" name="hebrew" id="hebrew-edit-input-field" value="" placeholder="עברית" >
                         <button type="submit" class="ui-btn ui-corner-all ui-shadow ui-btn-b ui-btn-icon-left ui-icon-check">Edit</button>
                     </div>
                 </form>

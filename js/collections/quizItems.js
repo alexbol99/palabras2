@@ -20,15 +20,17 @@ define(['models/app','models/palabra'],
                         if (this.query._where.category) {
                             delete this.query._where.category;
                         }
-                        this.fetch({reset: true});
                     }
                     else {
                         this.query.equalTo("category", category);
                         if (this.query._where.createdAt) {
                             delete this.query._where.createdAt
                         }
-                        this.fetch({reset: true});
                     }
+                    if (app.get("mode") == "Edit") {
+                        this.query.ascending("spanish");
+                    }
+                    this.fetch({reset: true});
                 }
             },
 
