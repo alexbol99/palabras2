@@ -1,8 +1,8 @@
 /**
  * Created by Owner on 1/20/15.
  */
-define(['collections/categories','models/palabra'],
-    function (categories, PalabraParseObject) {
+define(['models/app','collections/categories','models/palabra'],
+    function (app, categories, PalabraParseObject) {
         var self;
         var AddFormView = Backbone.View.extend({
 
@@ -27,6 +27,7 @@ define(['collections/categories','models/palabra'],
                     $("form#addItemForm select").append(self.optionTemplate( {category: category.get("category"),
                         text: category.get("category")} ));
                 });
+                $("#select-category-add-input-field").val( app.get("selectedCategory") );
                 $("form#addItemForm select").selectmenu('refresh');
                 this.category = $("#select-category-add-input-field").val();
                 // Form will be opened automatically by JQuery Mobile

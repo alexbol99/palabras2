@@ -9,7 +9,8 @@ define([],
                 sound: true,
                 currentDictionary: "",
                 selectedCategory: "",
-                mode: "Play"
+                mode: "Play",
+                forceRefresh: false
             },
             initialize: function () {
                 Parse.initialize("nNSG5uA8wGI1tWe4kaPqX3pFFplhc0nV5UlyDj8H", "IDxfUbmW9AIn7iej2PAC7FtDAO1KvSdPuqP18iyu");

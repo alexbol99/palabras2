@@ -11,7 +11,8 @@ define(['models/app'],
                 this.save( null, {
                         success: function (palabra) {
                             alert('New word added: ' + palabra.get("spanish"));
-                            self.trigger("added");
+                            app.set("forceRefresh", true);
+                            // self.trigger("added");
                         },
                         error: function (palabra, error) {
                             alert('Failed to create new object, with error code: ' + error.message);

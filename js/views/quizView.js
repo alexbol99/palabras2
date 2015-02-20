@@ -12,9 +12,12 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
             initialize: function () {
                 self = this;
                 this.maxNum = (window.orientation == undefined || window.orientation == 0) ? 8 : 4;
-                app.on("change:selectedCategory", this.start, this);
                 app.on("match", this.match, this);
-                app.on("change:mode", this.start, this);
+                app.on("change:selectedCategory", this.retrieveQuizItems, this);
+                app.on("change:mode", this.retrieveQuizItems, this);
+                app.on("change:forceRefresh", this.forceRefresh, this);
+                $("#play-button").show();
+                $("#refresh-button").show();
                 $("#add-button").hide();
             },
 
@@ -42,15 +45,17 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
                 $("#refresh-button").hide();
             },
 
-            retrieveFromParse: function(category) {
+            retrieveQuizItems: function() {
+                var category = app.get("selectedCategory");
                 this.quizItems = new QuizItems(category);
                 this.quizItems.on("sync", function() {
                     self.refresh();
                 });
             },
 
-            start: function() {
-                this.retrieveFromParse(app.get("selectedCategory"));
+            forceRefresh: function() {
+                app.set("forceRefresh", false);
+                this.retrieveQuizItems();
             },
 
             refresh_cb: function() {
