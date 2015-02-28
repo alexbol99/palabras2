@@ -51,7 +51,7 @@ define(['models/app', 'models/palabra', 'collections/categories', 'collections/q
             },
             // called when item added or item changed and we want to refresh view
             forceRefresh: function() {
-                this.set("forceRefresh", false);
+                // this.set("forceRefresh", false);
                 this.retrieveItems();
             },
             triggerMatch: function() {

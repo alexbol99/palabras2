@@ -22,6 +22,7 @@ define(['models/quiz', 'collections/quizItems',
                 quiz.on("match", this.match, this);
                 quiz.on("ready", this.render, this);
 
+                this.selectCategoryView = new SelectCategoryView();
             },
 
             events: {
@@ -36,12 +37,16 @@ define(['models/quiz', 'collections/quizItems',
                 if (!quiz.get("started")) {
                     $(this.el).find("header").append(this.templateHeader());
 
-                    var selectCategory = new SelectCategoryView();
-                    selectCategory.render();
+                    this.selectCategoryView.render();
 
                     $("#add-button").on("click", addItemForm.openForm);
 
                     quiz.set("started", true);
+                }
+
+                if (quiz.get("forceRefresh")) {
+                    this.selectCategoryView.render();
+                    this.set("forceRefresh", false);
                 }
 
                 this.clearAll();
