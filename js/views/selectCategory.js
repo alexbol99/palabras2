@@ -1,8 +1,8 @@
 /**
  * Created by Owner on 1/15/15.
  */
-define(['models/app', 'collections/categories', 'views/quizView'],
-    function (app, categories, quizView) {
+define(['models/quiz'],
+    function (quiz) {
         var self;
         var SelectCategoryView = Backbone.View.extend({
 
@@ -16,23 +16,22 @@ define(['models/app', 'collections/categories', 'views/quizView'],
 
             initialize: function () {
                 self = this;
-                this.categories = categories;
-                this.categories.on("ready", this.render, this);
-                this.categories.on("change:count", this.increaseCounter, this);
+                // this.categories.on("ready", this.render, this);
+                // this.categories.on("change:count", this.increaseCounter, this);
             },
 
             render: function () {
+                this.categories = quiz.get("categories");
                 this.categories.each( function(category) {
                     $(self.el).append(self.template( {category: category.get("category"),
                         text: category.get("category") + ' (' + category.get("count") + ')'} ));
                 });
                 $(this.el).selectmenu('refresh');
-                this.categoryChanged();
+                // this.categoryChanged();
             },
 
             categoryChanged: function() {
-                app.set("selectedCategory", $(this.el).val());
-                // quizView.start( $(this.el).val() );
+                quiz.set("selectedCategory", $(this.el).val());
             },
 
             increaseCounter: function(model) {
@@ -44,5 +43,5 @@ define(['models/app', 'collections/categories', 'views/quizView'],
 
         });
 
-        return new SelectCategoryView();
+        return SelectCategoryView;
     });

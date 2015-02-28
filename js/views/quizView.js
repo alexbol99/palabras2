@@ -1,61 +1,69 @@
 /**
  * Created by alexbol on 1/8/2015.
  */
-define(['models/app', 'collections/quizItems', 'views/textbox'],
-    function (app, QuizItems, Textbox) {
+define(['models/quiz', 'collections/quizItems',
+        'views/selectCategory', 'views/textbox', 'views/addItemForm'],
+    function (quiz, QuizItems, SelectCategoryView, Textbox, addItemForm) {
         var self;
 
         var Quiz = Backbone.View.extend({
 
             el: "div#div-main",
 
+            templateHeader: _.template(
+                '<a href="#" data-position-to="window" class="ui-btn ui-btn-inline ui-shadow ui-icon-audio ui-btn-icon-notext" id="toggle-sound-button"></a>' +
+                '<a href="#" data-position-to="window" class="ui-btn ui-btn-inline ui-shadow ui-icon-refresh ui-btn-icon-notext" id="refresh-button"></a>' +
+                '<a href="#addItemFormPopup" data-position-to="window" data-rel="popup" class="ui-btn ui-btn-inline ui-shadow ui-icon-plus ui-btn-icon-notext" id="add-button">Add</a>'
+            ),
+
             initialize: function () {
                 self = this;
                 this.maxNum = (window.orientation == undefined || window.orientation == 0) ? 8 : 4;
-                app.on("match", this.match, this);
-                app.on("change:selectedCategory", this.retrieveQuizItems, this);
-                app.on("change:mode", this.retrieveQuizItems, this);
-                app.on("change:forceRefresh", this.forceRefresh, this);
-                $("#play-button").show();
-                $("#refresh-button").show();
-                $("#add-button").hide();
+                quiz.on("match", this.match, this);
+                quiz.on("ready", this.render, this);
+
             },
 
             events: {
                 "click #toggle-sound-button" : "toggleSound",
                 "click #refresh-button" : "refresh_cb",
-                "click #play-button" : "setAppPlay",
-                "click #edit-button" : "setAppEdit"
-                //"change #language" : "refresh_cb"
+                "click #play-button" : "setAppMode",
+                "click #edit-button" : "setAppMode"
+            },
+
+            // Render view and start the game
+            render: function() {
+                if (!quiz.get("started")) {
+                    $(this.el).find("header").append(this.templateHeader());
+
+                    var selectCategory = new SelectCategoryView();
+                    selectCategory.render();
+
+                    $("#add-button").on("click", addItemForm.openForm);
+
+                    quiz.set("started", true);
+                }
+
+                this.clearAll();
+
+                $("#play-button").show();
+                if (quiz.get("mode") == "Play") {
+                    $("#refresh-button").show();
+                    $("#add-button").hide();
+                }
+                else {
+                    $("#add-button").show();
+                    $("#refresh-button").hide();
+                }
+
+                this.quizItems = quiz.get("quizItems");
+                this.refresh();
+
             },
 
             setAppMode: function(event) {
-                app.set("mode", $(event.currentTarget).text());
-            },
-
-            setAppPlay: function (event) {
-                app.set("mode", $(event.currentTarget).text());
-                $("#add-button").hide();
-                $("#refresh-button").show();
-            },
-
-            setAppEdit: function (event) {
-                app.set("mode", $(event.currentTarget).text());
-                $("#add-button").show();
-                $("#refresh-button").hide();
-            },
-
-            retrieveQuizItems: function() {
-                var category = app.get("selectedCategory");
-                this.quizItems = new QuizItems(category);
-                this.quizItems.on("sync", function() {
-                    self.refresh();
-                });
-            },
-
-            forceRefresh: function() {
-                app.set("forceRefresh", false);
-                this.retrieveQuizItems();
+                quiz.set("mode", $(event.currentTarget).text());
+                self.render();
             },
 
             refresh_cb: function() {
@@ -72,7 +80,7 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
             refresh: function () {
                 this.clearAll();
 
-                if (app.get("mode") == "Play") {
+                if (quiz.get("mode") == "Play") {
                     this.palabras = this.quizItems.getRandom(this.maxNum);
                 }
                 else {
@@ -98,7 +106,7 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
                     }
                 }, this);
 
-                if (app.get("mode") == "Play") {
+                if (quiz.get("mode") == "Play") {
                     this.quizItems.shuffle(this.palabras);
                 }
 
@@ -129,13 +137,13 @@ define(['models/app', 'collections/quizItems', 'views/textbox'],
 
             toggleSound: function(event) {
                 var button = event.currentTarget;
-                if (app.get("sound")) {
+                if (quiz.get("sound")) {
                     $(button).removeClass('ui-icon-audio');
                 }
                 else {
                     $(button).addClass('ui-icon-audio');
                 }
-                app.set("sound", !app.get("sound"));
+                quiz.set("sound", !quiz.get("sound"));
             }
 
         });

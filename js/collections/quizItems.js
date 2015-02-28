@@ -1,15 +1,19 @@
 /**
  * Created by alexbol on 2/10/2015.
  */
-define(['models/app','models/palabra'],
-    function (app, PalabraParseObject) {
+define(['models/palabra'],
+    function (PalabraParseObject) {
         var self;
 
         var QuizItems = Parse.Collection.extend({
             model: PalabraParseObject,
-            query: new Parse.Query(PalabraParseObject),
+            // query: new Parse.Query(PalabraParseObject),
 
-            initialize: function(category) {
+            initialize: function() {
+                this.query = new Parse.Query(PalabraParseObject);
+            },
+
+            sync: function(category, mode) {
                 if (category) {
                     if (category == "Palabros nuevos") {
                         var twoWeeks = (14 * 24 * 3600 * 1000);
@@ -27,7 +31,7 @@ define(['models/app','models/palabra'],
                             delete this.query._where.createdAt
                         }
                     }
-                    if (app.get("mode") == "Edit") {
+                    if (mode == "Edit") {
                         this.query.ascending("spanish");
                     }
                     this.fetch({reset: true});

@@ -1,8 +1,8 @@
 /**
  * Created by Owner on 1/20/15.
  */
-define(['collections/categories','models/palabra'],
-    function (categories, PalabraParseObject) {
+define(['models/quiz','models/palabra'],
+    function (quiz, PalabraParseObject) {
         var self;
         var EditFormView = Backbone.View.extend({
 
@@ -24,6 +24,7 @@ define(['collections/categories','models/palabra'],
             openForm: function(palabra) {
                 // Fill-in select options
                 $("form#editItemForm select").empty();
+                var categories = quiz.get("categories");
                 categories.each( function(category) {
                     $("form#editItemForm select").append(self.optionTemplate( {category: category.get("category"),
                         text: category.get("category")} ));
@@ -49,6 +50,8 @@ define(['collections/categories','models/palabra'],
                 var spanish = $("#spanish-edit-input-field").val();
                 var russian = $("#russian-edit-input-field").val();
                 var hebrew = $("#hebrew-edit-input-field").val();
+
+                var categories = quiz.get("categories");
 
                 if (this.palabra.get("category") != category) {
                     categories.changeCounter(this.palabra.get("category"), -1);

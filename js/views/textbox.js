@@ -1,8 +1,8 @@
 /**
  * Created by alexbol on 1/8/2015.
  */
-define(['models/app', 'views/editItemForm'],
-    function (app, editItemForm) {
+define(['models/quiz', 'views/editItemForm'],
+    function (quiz, editItemForm) {
         return Backbone.View.extend({
 
             className: "palabra",
@@ -10,7 +10,7 @@ define(['models/app', 'views/editItemForm'],
             initialize: function () {
                 this.render();
 
-                if (app.get("mode") == "Play") {
+                if (quiz.get("mode") == "Play") {
                     $(this.el).draggable({containment: "parent", cursor: "move", revert: true});
                 }
                 $(this.el).droppable({
@@ -18,7 +18,7 @@ define(['models/app', 'views/editItemForm'],
                             var other = ui.draggable[0];
                             if (this.id == other.id) {
 
-                                if ('speechSynthesis' in window && app.get("sound")) {
+                                if ('speechSynthesis' in window && quiz.get("sound")) {
                                     // Synthesis support. Make your web apps talk!
                                     var msg = new SpeechSynthesisUtterance(this.model.palabra.get("spanish"));
                                     msg.lang = 'es-ES';
@@ -30,7 +30,7 @@ define(['models/app', 'views/editItemForm'],
                                 $(this).html($(this).text() + " - " + $(other).text());
                                 $(this).fadeOut(1500);
                                 $(other).remove();
-                                app.triggerMatch();
+                                quiz.triggerMatch();
                             }
                         }
                     });
@@ -44,7 +44,7 @@ define(['models/app', 'views/editItemForm'],
                 });
 
                 $(this.el).on( "click", function(event) {
-                    if (app.get("mode") == "Edit" && app.get("sound")) {
+                    if (quiz.get("mode") == "Edit" && quiz.get("sound")) {
                         if ('speechSynthesis' in window) {
                             // Synthesis support. Make your web apps talk!
                             var msg = new SpeechSynthesisUtterance(this.model.palabra.get("spanish"));

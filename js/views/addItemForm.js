@@ -1,8 +1,8 @@
 /**
  * Created by Owner on 1/20/15.
  */
-define(['models/app','collections/categories','models/palabra'],
-    function (app, categories, PalabraParseObject) {
+define(['models/quiz','models/palabra'],
+    function (quiz, PalabraParseObject) {
         var self;
         var AddFormView = Backbone.View.extend({
 
@@ -17,17 +17,18 @@ define(['models/app','collections/categories','models/palabra'],
             initialize: function () {
                 self = this;
                 this.category = "";
-                $("#add-button").on("click", this.openForm);
+
             },
 
             openForm: function() {
                 // Fill-in select options
                 $("form#addItemForm select").empty();
+                var categories = quiz.get("categories");
                 categories.each( function(category) {
                     $("form#addItemForm select").append(self.optionTemplate( {category: category.get("category"),
                         text: category.get("category")} ));
                 });
-                $("#select-category-add-input-field").val( app.get("selectedCategory") );
+                $("#select-category-add-input-field").val( quiz.get("selectedCategory") );
                 $("form#addItemForm select").selectmenu('refresh');
                 this.category = $("#select-category-add-input-field").val();
                 // Form will be opened automatically by JQuery Mobile
@@ -36,6 +37,7 @@ define(['models/app','collections/categories','models/palabra'],
             resetForm: function() {
                 $(self.el)[0].reset();
                 $("#select-category-add-input-field").val(self.category);
+                var categories = quiz.get("categories");
                 categories.changeCounter(self.category, 1);
             },
 
