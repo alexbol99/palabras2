@@ -31,9 +31,9 @@ define(['models/palabra'],
                             delete this.query._where.createdAt
                         }
                     }
-                    if (mode == "Edit") {
+                    // if (mode == "Edit") {
                         this.query.ascending("spanish");
-                    }
+                    // }
                     this.fetch({reset: true});
                 }
             },
