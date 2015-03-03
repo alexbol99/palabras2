@@ -15,7 +15,7 @@ define(['models/palabra'],
 
             sync: function(category, mode) {
                 if (category) {
-                    if (category == "Palabros nuevos") {
+                    if (category == "Palabras nuevas") {
                         var twoWeeks = (14 * 24 * 3600 * 1000);
                         var currentDate = new Date();
                         var newItemsDate = new Date(currentDate.getTime() - (twoWeeks));
