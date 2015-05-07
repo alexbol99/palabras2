@@ -46,13 +46,11 @@ define(['models/quiz','models/palabra'],
                 this.category = $("#select-category-add-input-field").val();
                 var spanish = $("#spanish-add-input-field").val();
                 var russian = $("#russian-add-input-field").val();
-                var hebrew = $("#hebrew-add-input-field").val();
 
                 var palabra = new PalabraParseObject();
                 palabra.set("category", this.category);
                 palabra.set("spanish", spanish);
                 palabra.set("russian", russian);
-                palabra.set("hebrew", hebrew);
 
                 palabra.on("added", this.resetForm);
 

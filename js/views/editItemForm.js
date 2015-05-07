@@ -49,7 +49,6 @@ define(['models/quiz','models/palabra'],
                 var category = $("#select-category-edit-input-field").val();
                 var spanish = $("#spanish-edit-input-field").val();
                 var russian = $("#russian-edit-input-field").val();
-                var hebrew = $("#hebrew-edit-input-field").val();
 
                 var categories = quiz.get("categories");
 
@@ -60,7 +59,6 @@ define(['models/quiz','models/palabra'],
                 this.palabra.set("category", category);
                 this.palabra.set("spanish", spanish);
                 this.palabra.set("russian", russian);
-                this.palabra.set("hebrew", hebrew);
 
                 this.palabra.updateParse();
 
